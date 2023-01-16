@@ -71,19 +71,19 @@ export async function runSinglePost () {
             </div>
         </div>`;        
                 
-        const titleForm = document.querySelector("#title");
-        const bodyForm = document.querySelector("#body");
-        const mediaForm = document.querySelector("#media");
-        const tagsForm = document.querySelector("#tags");
+        // const titleForm = document.querySelector("#title");
+        // const bodyForm = document.querySelector("#body");
+        // const mediaForm = document.querySelector("#media");
+        // const tagsForm = document.querySelector("#tags");
 
-        titleForm.value = title;
-        bodyForm.value = body;
-        mediaForm.value = media,
-        tagsForm.value = tags.join(",");
+        // titleForm.value = title;
+        // bodyForm.value = body;
+        // mediaForm.value = media,
+        // tagsForm.value = tags.join(",");
     }
     getPost();
 
-    // updating/editing a post
+    // updating/editing a post btns
     const form = document.querySelector("#updatePost");
     const editingBtn = document.querySelector("#editBtn");
     const cancelBtn = document.querySelector("#cancel-Btn");
@@ -91,11 +91,12 @@ export async function runSinglePost () {
     // const url = new URL(location.href);
     // const id = url.searchParams.get("id");
 
-    editingBtn.onclick = function() {
+
+    editingBtn.onclick = function () {
         form.classList.remove("hidden");
     };
 
-    cancelBtn.onclick = function(event) {
+    cancelBtn.onclick = function (event) {
         event.preventDefault();
         form.classList.add("hidden");
     };
