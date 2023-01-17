@@ -1,7 +1,7 @@
 import { get_specificPost, removePost } from "../posts/index.mjs"
 import { getUser } from "../storage/localstorage.mjs";
 import { updatePost } from "../posts/index.mjs";
-import { newProfileUser, tagElement } from "../functions/functions.mjs";
+import { newProfileUser, tagElement, userNotAuthenticate } from "../functions/functions.mjs";
 import { SignOut } from "../storage/localstorage.mjs";
 
 
@@ -11,6 +11,7 @@ export async function runSinglePost () {
     let id = param.get("id");
 
     newProfileUser();
+    userNotAuthenticate();
 
 
     async function getPost() {
@@ -32,9 +33,12 @@ export async function runSinglePost () {
         }
         
         const signedInUser = getUser();
-        if (signedInUser.name === author.name) {
-            const singlePostBtn = document.querySelector("#buttons");
-            singlePostBtn.classList.remove("hidden");
+        if (signedInUser.name !== author.name) { 
+            const formContainers = document.querySelector("#formContainer");
+            formContainers.remove();
+
+            // singlePostBtn.remove();
+            // const singlePostBtn = document.querySelector("#buttons");
         }
 
         allPostsContainer.innerHTML +=
@@ -70,34 +74,8 @@ export async function runSinglePost () {
             </div>
         </div>`;        
                 
-        const titleForm = document.querySelector("#title");
-        const bodyForm = document.querySelector("#body");
-        const mediaForm = document.querySelector("#media");
-        const tagsForm = document.querySelector("#tags");
-
-        titleForm.value = title;
-        bodyForm.value = body;
-        mediaForm.value = media,
-        tagsForm.value = tags.join(",");
     }
     getPost();
-
-    // updating/editing a post
-    // const form = document.querySelector("#updatePost");
-    // const editingBtn = document.querySelector("#editBtn");
-    // const cancelBtn = document.querySelector("#cancel-Btn");
-
-    // const url = new URL(location.href);
-    // const id = url.searchParams.get("id");
-
-    // editingBtn.onclick = function() {
-    //     form.classList.remove("hidden");
-    // };
-
-    // cancelBtn.onclick = function(event) {
-    //     event.preventDefault();
-    //     form.classList.add("hidden");
-    // };
 
 
     async function updateFormListener() {
@@ -118,6 +96,10 @@ export async function runSinglePost () {
 
             form.addEventListener("submit", (async function (event) {
                 event.preventDefault();
+                // const error = document.querySelector("#errors");
+                // error.classList.add("hidden");
+
+
                 const form = event.target;
                 const title = form.title.value;
                 const body = form.body.value;
@@ -140,11 +122,7 @@ export async function runSinglePost () {
                 // getPost();
 
             }));
-            
         }
-        // form.reset();
-
-        
     }
     updateFormListener();
     
